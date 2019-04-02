@@ -1,10 +1,14 @@
 package ru.nesk27.contacts;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnAdd, btnFind, btnDelete;
     EditText lastname, firstname;
 
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         lastname = (EditText) findViewById(R.id.lastname);
         firstname = (EditText) findViewById(R.id.firstname);
+
+        dbHelper = new DBHelper(this);
     }
 
     @Override
@@ -62,18 +69,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String etFirstname = firstname.getText().toString();
         String etLastname = lastname.getText().toString();
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
         switch (v.getId())
         {
             case R.id.btnAdd:
-                //
+                contentValues.put(DBHelper.KEY_NAME, etFirstname);
+                contentValues.put(DBHelper.KEY_LASTNAME, etLastname);
+
+                database.insert(DBHelper.TABLE_CONTACTS, null, contentValues);
                 break;
             case R.id.btnFind:
-                //
+                Cursor cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+
+                if (cursor.moveToFirst()) {
+                    int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
+                    int nameIndex = cursor.getColumnIndex(DBHelper.KEY_NAME);
+                    int lastnameIndex = cursor.getColumnIndex(DBHelper.KEY_LASTNAME);
+                        do {
+                            Log.d("mLog", "ID = " + cursor.getInt(idIndex) + ", name = " + cursor.getString(nameIndex) + ", lastname = " + cursor.getString(lastnameIndex));
+                        } while (cursor.moveToNext());
+                } else
+                    Log.d("mLog", "found 0 rows");
+
+                cursor.close();
                 break;
             case R.id.btnDelete:
-                //
+                database.delete(DBHelper.TABLE_CONTACTS, null, null); // Пока удаляются ВСЕ! записи из бд
                 break;
 
         }
+        dbHelper.close();
     }
 }
