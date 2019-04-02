@@ -1,6 +1,7 @@
 package ru.nesk27.contacts;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,29 +18,19 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnAdd, btnFind, btnDelete;
-    EditText lastname, firstname;
+    Button btnActTwo;
 
-    DBHelper dbHelper;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnAdd = (Button) findViewById(R.id.btnAdd);
-        btnAdd.setOnClickListener(this);
 
-        btnFind = (Button) findViewById(R.id.btnFind);
-        btnFind.setOnClickListener(this);
-
-        btnDelete = (Button) findViewById(R.id.btnDelete);
-        btnDelete.setOnClickListener(this);
-
-        lastname = (EditText) findViewById(R.id.lastname);
-        firstname = (EditText) findViewById(R.id.firstname);
-
-        dbHelper = new DBHelper(this);
+        btnActTwo = (Button) findViewById(R.id.btnActTwo);
+        btnActTwo.setOnClickListener(this);
     }
 
     @Override
@@ -66,41 +57,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String etFirstname = firstname.getText().toString();
-        String etLastname = lastname.getText().toString();
-
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-
         switch (v.getId())
         {
-            case R.id.btnAdd:
-                contentValues.put(DBHelper.KEY_NAME, etFirstname);
-                contentValues.put(DBHelper.KEY_LASTNAME, etLastname);
-
-                database.insert(DBHelper.TABLE_CONTACTS, null, contentValues);
+            case R.id.btnActTwo :
+                Intent intent = new Intent(this, ActivityTwo.class);
+                startActivity(intent);
                 break;
-            case R.id.btnFind:
-                Cursor cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
-
-                if (cursor.moveToFirst()) {
-                    int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
-                    int nameIndex = cursor.getColumnIndex(DBHelper.KEY_NAME);
-                    int lastnameIndex = cursor.getColumnIndex(DBHelper.KEY_LASTNAME);
-                        do {
-                            Log.d("mLog", "ID = " + cursor.getInt(idIndex) + ", name = " + cursor.getString(nameIndex) + ", lastname = " + cursor.getString(lastnameIndex));
-                        } while (cursor.moveToNext());
-                } else
-                    Log.d("mLog", "found 0 rows");
-
-                cursor.close();
+            default:
                 break;
-            case R.id.btnDelete:
-                database.delete(DBHelper.TABLE_CONTACTS, null, null); // Пока удаляются ВСЕ! записи из бд
-                break;
-
         }
-        dbHelper.close();
+
     }
 }
