@@ -1,26 +1,23 @@
 package ru.nesk27.contacts;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnActTwo;
+    Button btnActThree;
 
 
+    String[] names = { "Иван", "Nik", "Petya", "Sidr", "Klava", "Boris"};
 
 
     @Override
@@ -29,8 +26,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
+        ListView lvMain = (ListView) findViewById(R.id.lvMain); // Находим список
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names); // Создаём адаптер
+
+        lvMain.setAdapter(adapter); // Присваивем адаптер списку
+
         btnActTwo = (Button) findViewById(R.id.btnActTwo);
         btnActTwo.setOnClickListener(this);
+
+        btnActThree = (Button) findViewById(R.id.btnActThree);
+        btnActThree.setOnClickListener(this);
     }
 
     @Override
@@ -62,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnActTwo :
                 Intent intent = new Intent(this, ActivityTwo.class);
                 startActivity(intent);
+                break;
+            case R.id.btnActThree :
+                Intent intent2 = new Intent(this, ActivityThree.class);
+                startActivity(intent2);
                 break;
             default:
                 break;

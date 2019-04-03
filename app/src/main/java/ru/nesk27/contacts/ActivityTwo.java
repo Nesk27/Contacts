@@ -1,14 +1,10 @@
 package ru.nesk27.contacts;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +17,7 @@ public class ActivityTwo extends AppCompatActivity implements View.OnClickListen
     Button btnAdd, btnFind, btnDelete, btnUpd, btnDel;
     EditText lastname, firstname, id;
 
-    DBHelper dbHelper;
+    DBHelper1 dbHelper1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +43,7 @@ public class ActivityTwo extends AppCompatActivity implements View.OnClickListen
         firstname = (EditText) findViewById(R.id.firstname);
         id = (EditText) findViewById(R.id.id);
 
-        dbHelper = new DBHelper(this);
+        dbHelper1 = new DBHelper1(this);
 
     }
 
@@ -79,25 +75,25 @@ public class ActivityTwo extends AppCompatActivity implements View.OnClickListen
         String etLastname = lastname.getText().toString();
         String etId = id.getText().toString();
 
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        SQLiteDatabase database = dbHelper1.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
         switch (v.getId())
         {
             case R.id.btnAdd:
-                contentValues.put(DBHelper.KEY_NAME, etFirstname);
-                contentValues.put(DBHelper.KEY_LASTNAME, etLastname);
+                contentValues.put(DBHelper1.KEY_NAME, etFirstname);
+                contentValues.put(DBHelper1.KEY_LASTNAME, etLastname);
 
-                database.insert(DBHelper.TABLE_CONTACTS, null, contentValues);
+                database.insert(DBHelper1.TABLE_CONTACTS, null, contentValues);
                 break;
             case R.id.btnFind:
-                Cursor cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+                Cursor cursor = database.query(DBHelper1.TABLE_CONTACTS, null, null, null, null, null, null);
 
                 if (cursor.moveToFirst()) {
-                    int idIndex = cursor.getColumnIndex(DBHelper.KEY_ID);
-                    int nameIndex = cursor.getColumnIndex(DBHelper.KEY_NAME);
-                    int lastnameIndex = cursor.getColumnIndex(DBHelper.KEY_LASTNAME);
+                    int idIndex = cursor.getColumnIndex(DBHelper1.KEY_ID);
+                    int nameIndex = cursor.getColumnIndex(DBHelper1.KEY_NAME);
+                    int lastnameIndex = cursor.getColumnIndex(DBHelper1.KEY_LASTNAME);
                     do {
                         Log.d("mLog", "ID = " + cursor.getInt(idIndex) + ", name = " + cursor.getString(nameIndex) + ", lastname = " + cursor.getString(lastnameIndex));
                     } while (cursor.moveToNext());
@@ -107,16 +103,16 @@ public class ActivityTwo extends AppCompatActivity implements View.OnClickListen
                 cursor.close();
                 break;
             case R.id.btnDelete:
-                database.delete(DBHelper.TABLE_CONTACTS, null, null); // Пока удаляются ВСЕ! записи из бд
+                database.delete(DBHelper1.TABLE_CONTACTS, null, null); // Пока удаляются ВСЕ! записи из бд
                 break;
             case R.id.btnUpd:
                 if (etId.equalsIgnoreCase(""))
                 {
                     break;
                 }
-                contentValues.put(DBHelper.KEY_LASTNAME, etLastname);
-                contentValues.put(DBHelper.KEY_NAME, etFirstname);
-                int updCount = database.update(DBHelper.TABLE_CONTACTS, contentValues, DBHelper.KEY_NAME + "= ?", new String[] {etFirstname});
+                contentValues.put(DBHelper1.KEY_LASTNAME, etLastname);
+                contentValues.put(DBHelper1.KEY_NAME, etFirstname);
+                int updCount = database.update(DBHelper1.TABLE_CONTACTS, contentValues, DBHelper1.KEY_NAME + "= ?", new String[] {etFirstname});
 
                 Log.d("mLog", "updates rows count = " + updCount);
                 break;
@@ -125,14 +121,14 @@ public class ActivityTwo extends AppCompatActivity implements View.OnClickListen
                 {
                     break;
                 }
-                int delCount = database.delete(DBHelper.TABLE_CONTACTS, DBHelper.KEY_NAME + "= ?", new String[]{etFirstname});
+                int delCount = database.delete(DBHelper1.TABLE_CONTACTS, DBHelper1.KEY_NAME + "= ?", new String[]{etFirstname});
                 Log.d("mLog", "Delete rows count = " + delCount);
 
                 break;
             default:
                 break;
         }
-        dbHelper.close();
+        dbHelper1.close();
     }
 
 }
