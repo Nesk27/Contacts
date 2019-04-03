@@ -10,12 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".EditWork"></activity>
-        <activity android:name=".ActivityFour" />
-        <activity android:name=".ActivityThree" />
-        <activity
-            android:name=".ActivityTwo"
-            android:label="@string/title_activity_two"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddWorkContact" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

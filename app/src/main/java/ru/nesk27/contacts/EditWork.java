@@ -2,11 +2,11 @@ package ru.nesk27.contacts;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EditWork extends Activity {
 
@@ -68,7 +68,7 @@ public class EditWork extends Activity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-              
+
                 id = null;
                 Bundle extras = getIntent().getExtras();
                 if (extras != null) {
@@ -80,7 +80,7 @@ public class EditWork extends Activity {
                     id = extras.getLong(DB.KEY_ID);
                     db.updateDB(mlastname.getText().toString(), mfirstname.getText().toString(), msurname.getText().toString(), mphone.getText().toString(), mdate.getText().toString(), id);
                     db.close();
-                    Intent intent = new Intent(EditWork.this, ActivityThree.class);
+                    Intent intent = new Intent(EditWork.this, MainActivity.class);
                     startActivity(intent);
                 }
 
@@ -90,7 +90,21 @@ public class EditWork extends Activity {
         });
 
 
+        btnBack.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditWork.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
+
+
 
 
 }

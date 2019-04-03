@@ -1,81 +1,113 @@
 package ru.nesk27.contacts;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.database.Cursor;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.SimpleCursorAdapter;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    Button btnActTwo;
-    Button btnActThree;
+public class MainActivity extends Activity {
 
 
-    String[] names = { "Иван", "Nik", "Petya", "Sidr", "Klava", "Boris"};
+    private static final int CM_DELETE_ID = 1;
+    ListView lvData;
+    DB db;
+    SimpleCursorAdapter scAdapter;
+    Cursor cursor;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    /** Called when the activity is first created. */
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
+        // открываем подключение к БД
+        db = new DB(this);
+        db.open();
 
-        ListView lvMain = (ListView) findViewById(R.id.lvMain); // Находим список
+        // получаем курсор
+        cursor = db.getAllData();
+        startManagingCursor(cursor);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names); // Создаём адаптер
+        // формируем столбцы сопоставления
+        String[] from = new String[] { DB.KEY_PHOTO, DB.KEY_LASTNAME, DB.KEY_NAME, DB.KEY_SURNAME, DB.KEY_PHONE, DB.KEY_DATE };
+        int[] to = new int[] { R.id.ivPhoto, R.id.tvLastname, R.id.tvName, R.id.tvSurname, R.id.tvPhone, R.id.tvDate };
 
-        lvMain.setAdapter(adapter); // Присваивем адаптер списку
+        // создааем адаптер и настраиваем список
+        scAdapter = new SimpleCursorAdapter(this, R.layout.item, cursor, from, to);
+        lvData = (ListView) findViewById(R.id.lvData);
+        lvData.setAdapter(scAdapter);
 
-        btnActTwo = (Button) findViewById(R.id.btnActTwo);
-        btnActTwo.setOnClickListener(this);
+        // добавляем контекстное меню к списку
+        registerForContextMenu(lvData);
 
-        btnActThree = (Button) findViewById(R.id.btnActThree);
-        btnActThree.setOnClickListener(this);
+        lvData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                cursor.moveToPosition(position);
+                Intent i = new Intent(MainActivity.this, EditWork.class);
+                i.putExtra(DB.KEY_ID, id);
+                i.putExtra(DB.KEY_PHOTO, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_PHOTO)));
+                i.putExtra(DB.KEY_LASTNAME, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_LASTNAME)));
+                i.putExtra(DB.KEY_NAME, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_NAME)));
+                i.putExtra(DB.KEY_SURNAME, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_SURNAME)));
+                i.putExtra(DB.KEY_PHONE, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_PHONE)));
+                i.putExtra(DB.KEY_DATE, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_DATE)));
+                startActivity(i);
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    // обработка нажатия кнопки
+    public void onButtonClick(View view) {
+        /*// добавляем запись
+        db.addRec("sometext " + (cursor.getCount() + 1), R.drawable.ic_launcher_background);
+        // обновляем курсор
+        cursor.requery();*/
+        Intent intent = new Intent(this, AddWorkContact.class);
+        startActivity(intent);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, CM_DELETE_ID, 0, R.string.delete_record);
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == CM_DELETE_ID) {
+            // получаем из пункта контекстного меню данные по пункту списка
+            AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
+            // извлекаем id записи и удаляем соответствующую запись в БД
+            db.delRec(acmi.id);
+            // обновляем курсор
+            cursor.requery();
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return super.onContextItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.btnActTwo :
-                Intent intent = new Intent(this, ActivityTwo.class);
-                startActivity(intent);
-                break;
-            case R.id.btnActThree :
-                Intent intent2 = new Intent(this, ActivityThree.class);
-                startActivity(intent2);
-                break;
-            default:
-                break;
-        }
 
+
+
+
+    protected void onDestroy() {
+        super.onDestroy();
+        // закрываем подключение при выходе
+        db.close();
     }
+
 }
