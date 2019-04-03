@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 cursor.moveToPosition(position);
-                Intent i = new Intent(MainActivity.this, EditWork.class);
+                Intent i = new Intent(MainActivity.this, EditFriends.class);
                 i.putExtra(DB.KEY_ID, id);
                 i.putExtra(DB.KEY_PHOTO, cursor.getString(
                         cursor.getColumnIndexOrThrow(DB.KEY_PHOTO)));

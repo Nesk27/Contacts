@@ -1,6 +1,5 @@
 package ru.nesk27.contacts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditWork extends AppCompatActivity {
+public class EditFriends extends AppCompatActivity {
 
     Button btnAdd, btnBack;
     EditText mlastname, mfirstname, msurname, mphone, mdate;
@@ -20,7 +19,7 @@ public class EditWork extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_work);
+        setContentView(R.layout.activity_edit_friends);
 
         db = new DB(this);
         db.open();
@@ -87,14 +86,14 @@ public class EditWork extends AppCompatActivity {
 
                     if (etFirstname.equalsIgnoreCase("") | etLastname.equalsIgnoreCase("") | etPhone.equalsIgnoreCase("") | etDate.equalsIgnoreCase(""))
                     {
-                        Toast toastError = Toast.makeText(EditWork.this, "Контакт не изменен! Заполните все данные!", Toast.LENGTH_SHORT);
+                        Toast toastError = Toast.makeText(EditFriends.this, "Контакт не изменен! Заполните все данные!", Toast.LENGTH_SHORT);
                         toastError.show();
                     } else {
                         db.updateDB(etLastname, etFirstname, etSurname, etPhone, etDate, id);
-                        Toast toast = Toast.makeText(EditWork.this, "Контакт успешно изменен!", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(EditFriends.this, "Контакт успешно изменен!", Toast.LENGTH_SHORT);
                         toast.show();
                         db.close();
-                        Intent intent = new Intent(EditWork.this, MainActivity.class);
+                        Intent intent = new Intent(EditFriends.this, MainActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -110,7 +109,7 @@ public class EditWork extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EditWork.this, MainActivity.class);
+                Intent intent = new Intent(EditFriends.this, MainActivity.class);
                 startActivity(intent);
             }
         });
