@@ -73,6 +73,19 @@ public class DB {
         mDB.delete(DB_TABLE, KEY_ID + " = " + id, null);
     }
 
+
+    public void updateDB(String lastname, String name, String surname, String phone, String date, long id)
+    {
+        ContentValues args = new ContentValues();
+        args.put(KEY_LASTNAME, lastname);
+        args.put(KEY_NAME, name);
+        args.put(KEY_SURNAME, surname);
+        args.put(KEY_PHONE, phone);
+        args.put(KEY_DATE, date);
+
+        mDB.update(DB_TABLE, args, KEY_ID + "=" + id, null);
+    }
+
     // класс по созданию и управлению БД
     private class DBHelper extends SQLiteOpenHelper {
 
@@ -97,5 +110,6 @@ public class DB {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
+
     }
 }

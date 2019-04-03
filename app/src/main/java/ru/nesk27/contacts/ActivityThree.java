@@ -1,9 +1,11 @@
 package ru.nesk27.contacts;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.app.Activity;
 import android.database.Cursor;
@@ -49,6 +51,29 @@ public class ActivityThree extends Activity {
 
         // добавляем контекстное меню к списку
         registerForContextMenu(lvData);
+
+        lvData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                cursor.moveToPosition(position);
+                Intent i = new Intent(ActivityThree.this, EditWork.class);
+                i.putExtra(DB.KEY_ID, id);
+                i.putExtra(DB.KEY_PHOTO, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_PHOTO)));
+                i.putExtra(DB.KEY_LASTNAME, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_LASTNAME)));
+                i.putExtra(DB.KEY_NAME, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_NAME)));
+                i.putExtra(DB.KEY_SURNAME, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_SURNAME)));
+                i.putExtra(DB.KEY_PHONE, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_PHONE)));
+                i.putExtra(DB.KEY_DATE, cursor.getString(
+                        cursor.getColumnIndexOrThrow(DB.KEY_DATE)));
+                startActivity(i);
+            }
+        });
     }
 
     // обработка нажатия кнопки
@@ -79,6 +104,10 @@ public class ActivityThree extends Activity {
         }
         return super.onContextItemSelected(item);
     }
+
+
+
+
 
     protected void onDestroy() {
         super.onDestroy();
