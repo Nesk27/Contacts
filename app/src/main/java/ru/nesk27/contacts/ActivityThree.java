@@ -39,8 +39,8 @@ public class ActivityThree extends Activity {
         startManagingCursor(cursor);
 
         // формируем столбцы сопоставления
-        String[] from = new String[] { DB.KEY_PHOTO, DB.KEY_LASTNAME, DB.KEY_NAME, DB.KEY_SURNAME };
-        int[] to = new int[] { R.id.ivPhoto, R.id.tvLastname, R.id.tvName, R.id.tvSurname };
+        String[] from = new String[] { DB.KEY_PHOTO, DB.KEY_LASTNAME, DB.KEY_NAME, DB.KEY_SURNAME, DB.KEY_PHONE, DB.KEY_DATE };
+        int[] to = new int[] { R.id.ivPhoto, R.id.tvLastname, R.id.tvName, R.id.tvSurname, R.id.tvPhone, R.id.tvDate };
 
         // создааем адаптер и настраиваем список
         scAdapter = new SimpleCursorAdapter(this, R.layout.item, cursor, from, to);
