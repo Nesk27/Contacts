@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -93,6 +94,8 @@ public class MainActivity extends Activity {
             AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
             // извлекаем id записи и удаляем соответствующую запись в БД
             db.delRec(acmi.id);
+            Toast toast = Toast.makeText(MainActivity.this, "Контакт удален!", Toast.LENGTH_SHORT);
+            toast.show();
             // обновляем курсор
             cursor.requery();
             return true;
