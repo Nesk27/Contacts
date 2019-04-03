@@ -91,7 +91,7 @@ public class EditWork extends AppCompatActivity {
                         toastError.show();
                     } else {
                         db.updateDB(etLastname, etFirstname, etSurname, etPhone, etDate, id);
-                        Toast toast = Toast.makeText(EditWork.this, "Контакт успешно измене!", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(EditWork.this, "Контакт успешно изменен!", Toast.LENGTH_SHORT);
                         toast.show();
                         db.close();
                         Intent intent = new Intent(EditWork.this, MainActivity.class);
