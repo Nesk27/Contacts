@@ -54,16 +54,16 @@ public class AddWorkContact extends AppCompatActivity implements View.OnClickLis
         {
             case R.id.btnAdd:
 
-                if (!"".equalsIgnoreCase(etFirstname) & !"".equalsIgnoreCase(etLastname)) {
+                if (etFirstname.equalsIgnoreCase("") | etLastname.equalsIgnoreCase("") | etPhone.equalsIgnoreCase("") | etDate.equalsIgnoreCase("")) {
+                    Toast toastError = Toast.makeText(AddWorkContact.this, "Контакт не добавлен! Заполните все данные!", Toast.LENGTH_SHORT);
+                    toastError.show();
+                } else {
                     db.addRec(etLastname, etFirstname, etSurname, etPhone, etDate, R.drawable.ic_account_box_black_36dp);
                     Toast toast = Toast.makeText(AddWorkContact.this, "Контакт успешно добавлен!", Toast.LENGTH_SHORT);
                     toast.show();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     db.close();
-                } else {
-                    Toast toastError = Toast.makeText(AddWorkContact.this, "Контакт не добавлен! Заполните все данные!", Toast.LENGTH_SHORT);
-                    toastError.show();
                 }
 
                 break;

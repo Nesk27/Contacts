@@ -3,12 +3,13 @@ package ru.nesk27.contacts;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditWork extends Activity {
+public class EditWork extends AppCompatActivity {
 
     Button btnAdd, btnBack;
     EditText mlastname, mfirstname, msurname, mphone, mdate;
@@ -24,14 +25,14 @@ public class EditWork extends Activity {
         db = new DB(this);
         db.open();
 
-        mlastname = (EditText) findViewById(R.id.lastnameEditW);
-        mfirstname = (EditText) findViewById(R.id.firstnameEditW);
-        msurname = (EditText) findViewById(R.id.surnameEditW);
-        mphone = (EditText) findViewById(R.id.phoneEditW);
-        mdate = (EditText) findViewById(R.id.dateEditW);
+        mlastname = findViewById(R.id.lastnameEditW);
+        mfirstname = findViewById(R.id.firstnameEditW);
+        msurname = findViewById(R.id.surnameEditW);
+        mphone = findViewById(R.id.phoneEditW);
+        mdate = findViewById(R.id.dateEditW);
 
-        btnAdd = (Button) findViewById(R.id.btnConfirmW);
-        btnBack = (Button) findViewById(R.id.btnBackEditW);
+        btnAdd = findViewById(R.id.btnConfirmW);
+        btnBack = findViewById(R.id.btnBackEditW);
 
         id = null;
         Bundle extras = getIntent().getExtras();
@@ -72,16 +73,30 @@ public class EditWork extends Activity {
                 id = null;
                 Bundle extras = getIntent().getExtras();
                 if (extras != null) {
-                    mlastname = (EditText) findViewById(R.id.lastnameEditW);
-                    mfirstname = (EditText) findViewById(R.id.firstnameEditW);
-                    msurname = (EditText) findViewById(R.id.surnameEditW);
-                    mphone = (EditText) findViewById(R.id.phoneEditW);
-                    mdate = (EditText) findViewById(R.id.dateEditW);
+                    mlastname = findViewById(R.id.lastnameEditW);
+                    mfirstname = findViewById(R.id.firstnameEditW);
+                    msurname = findViewById(R.id.surnameEditW);
+                    mphone = findViewById(R.id.phoneEditW);
+                    mdate = findViewById(R.id.dateEditW);
                     id = extras.getLong(DB.KEY_ID);
-                    db.updateDB(mlastname.getText().toString(), mfirstname.getText().toString(), msurname.getText().toString(), mphone.getText().toString(), mdate.getText().toString(), id);
-                    db.close();
-                    Intent intent = new Intent(EditWork.this, MainActivity.class);
-                    startActivity(intent);
+                    String etFirstname = mfirstname.getText().toString();
+                    String etLastname = mlastname.getText().toString();
+                    String etSurname = msurname.getText().toString();
+                    String etPhone = mphone.getText().toString();
+                    String etDate = mdate.getText().toString();
+
+                    if (etFirstname.equalsIgnoreCase("") | etLastname.equalsIgnoreCase("") | etPhone.equalsIgnoreCase("") | etDate.equalsIgnoreCase(""))
+                    {
+                        Toast toastError = Toast.makeText(EditWork.this, "Контакт не изменен! Заполните все данные!", Toast.LENGTH_SHORT);
+                        toastError.show();
+                    } else {
+                        db.updateDB(etLastname, etFirstname, etSurname, etPhone, etDate, id);
+                        Toast toast = Toast.makeText(EditWork.this, "Контакт успешно измене!", Toast.LENGTH_SHORT);
+                        toast.show();
+                        db.close();
+                        Intent intent = new Intent(EditWork.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
 
 
