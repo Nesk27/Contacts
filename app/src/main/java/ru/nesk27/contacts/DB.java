@@ -99,7 +99,7 @@ public class DB {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(DB_CREATE);
 
-            /*db.execSQL("insert into " + DB_TABLE + "(photo, lastname, name, surname, phone, date) values (1, '1', '2', '3', '4', '5');" );
+            db.execSQL("insert into " + DB_TABLE + "(photo, lastname, name, surname, phone, date) values (1, '1', '2', '3', '4', '5');" );
             //Сразу добавляем тестовые данные
             ContentValues cv = new ContentValues();
             for (int i = 1; i < 5; i++) {
@@ -110,7 +110,7 @@ public class DB {
                 cv.put(KEY_PHONE, "8-800-555-35-3" + i);
                 cv.put(KEY_DATE, "01.01.199" + i);
                 db.insert(DB_TABLE, null, cv);
-            }*/
+            }
         }
 
         @Override

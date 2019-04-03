@@ -166,7 +166,7 @@ public class MainActivity extends Activity {
             AdapterContextMenuInfo acmi2 = (AdapterContextMenuInfo) item.getMenuInfo();
             // извлекаем id записи и удаляем соответствующую запись в БД
             db2.delRec2(acmi2.id);
-            Toast toast = Toast.makeText(MainActivity.this, "Контакт удален залупа блять!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(MainActivity.this, "Контакт удален!", Toast.LENGTH_SHORT);
             toast.show();
             // обновляем курсор
             cursor2.requery();
@@ -174,11 +174,6 @@ public class MainActivity extends Activity {
         }
         return super.onContextItemSelected(item);
     }
-
-
-
-
-
 
 
     protected void onDestroy() {
