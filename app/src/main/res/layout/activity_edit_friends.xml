@@ -31,11 +31,15 @@
         android:layout_height="wrap_content"
         android:hint="Телефон" />
 
-    <EditText
+    <TextView
         android:id="@+id/dateEditW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="День рождения" />
+        android:hint="День рождения"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="onClickDate"
+        android:textSize="20sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

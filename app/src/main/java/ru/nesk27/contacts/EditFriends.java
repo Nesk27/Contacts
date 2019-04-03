@@ -1,18 +1,28 @@
 package ru.nesk27.contacts;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditFriends extends AppCompatActivity {
 
+    int DIALOG_DATE = 1;
+    int myYear = 2011;
+    int myMonth = 02;
+    int myDay = 03;
+
     Button btnAdd, btnBack;
-    EditText mlastname, mfirstname, msurname, mphone, mdate;
+    EditText mlastname, mfirstname, msurname, mphone;
     Long id;
+    TextView mdate;
 
     DB db;
 
@@ -117,7 +127,28 @@ public class EditFriends extends AppCompatActivity {
     }
 
 
+    public void onClickDate(View view) {
+        showDialog(DIALOG_DATE);
+    }
 
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_DATE) {
+            DatePickerDialog tpd = new DatePickerDialog(this, myCallBack, myYear, myMonth, myDay);
+            return tpd;
+        }
+        return super.onCreateDialog(id);
+    }
+
+    DatePickerDialog.OnDateSetListener myCallBack = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myYear = year;
+            myMonth = monthOfYear + 1;
+            myDay = dayOfMonth;
+            mdate.setText(myDay + "." + myMonth + "." + myYear);
+        }
+    };
 
 
 
