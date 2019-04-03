@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:onClick="onButtonClick"
-        android:text="Добавить контакт друга"></Button>
+        android:text="@string/addfriends"/>
 
     <Button
         android:id="@+id/btnMainAddWork"
@@ -18,14 +18,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:onClick="onButtonClick2"
-        android:text="Добавить контакт коллеги" />
+        android:text="@string/addcollegues" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Друзья"
+        android:text="@string/friends"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/lvData"
+        android:layout_width="match_parent"
+        android:layout_height="198dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/collegies"
         android:textSize="18sp" />
 
     <ListView
@@ -33,18 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="197dp" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Коллеги"
-        android:textSize="18sp" />
 
-    <ListView
-        android:id="@+id/lvData"
-        android:layout_width="match_parent"
-        android:layout_height="198dp" />
 
 
 </LinearLayout>

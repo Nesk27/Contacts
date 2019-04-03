@@ -10,7 +10,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_account_box_black_36dp"></ImageView>
+        android:src="@drawable/ic_account_box_black_36dp"/>
 
     <EditText
         android:id="@+id/lastname2"
@@ -42,21 +42,19 @@
         android:id="@+id/workphone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Телефон" />
+        android:hint="Рабочий телефон" />
 
     <EditText
         android:id="@+id/work"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Телефон" />
-
-
-
+        android:hint="Должность" />
+    
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnAdd2"

@@ -4,4 +4,8 @@
     <string name="title_activity_two">ActivityTwo</string>
     <string name="add_record">Добавить запись</string>
     <string name="delete_record">Удалить запись</string>
+    <string name="friends">Друзья</string>
+    <string name="collegies">Коллеги</string>
+    <string name="addfriends">Добавить контакт друга</string>
+    <string name="addcollegues">Добавить контакт коллеги</string>
 </resources>
