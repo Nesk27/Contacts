@@ -6,14 +6,14 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/ivPhoto"
+        android:id="@+id/ivPhoto2"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_account_box_black_36dp"></ImageView>
 
     <EditText
-        android:id="@+id/lastnameEditW"
+        android:id="@+id/lastname2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -21,33 +21,37 @@
         android:inputType=""/>
 
     <EditText
-        android:id="@+id/firstnameEditW"
+        android:id="@+id/firstname2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Имя"/>
 
     <EditText
-        android:id="@+id/surnameEditW"
+        android:id="@+id/surname2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Отчество" />
 
     <EditText
-        android:id="@+id/phoneEditW"
+        android:id="@+id/phone2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Телефон" />
 
-    <TextView
-        android:id="@+id/dateEditW"
+    <EditText
+        android:id="@+id/workphone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="День рождения"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="onClickDate"
-        android:textSize="20sp"
-        android:layout_marginLeft="5dp"/>
+        android:hint="Телефон" />
+
+    <EditText
+        android:id="@+id/work"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Телефон" />
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,13 +59,13 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnConfirmW"
+            android:id="@+id/btnAdd2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Изменить" />
+            android:text="Добавить" />
         <Button
-            android:id="@+id/btnBackEditW"
+            android:id="@+id/btnBack2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_vertical"
